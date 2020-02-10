@@ -24,6 +24,9 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input": "src/custom-theme.scss"
+              },
               "src/styles.css"
             ],
             "scripts": []
@@ -120,6 +123,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "ourmusic-front"
+    }
+  },
+  "defaultProject": "ourmusic-front",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "css"
+    }
+  }
 }
