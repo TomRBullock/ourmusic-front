@@ -1,5 +1,9 @@
 <mat-toolbar [style.height.%]="7">
-  <h1 class="col-6 text-center">OurMusic</h1>
+  <h1 class="col-6 text-center">
+    <button mat-button routerLink="">
+      OurMusic
+    </button>
+  </h1>
   <h1 class="col-6 text-center">
     <button mat-button routerLink="/login">
       Login
@@ -8,5 +12,7 @@
 </mat-toolbar>
 
 
-<router-outlet></router-outlet>
+<a [@routeAnimations]="prepareRoute(outlet)" >
+  <router-outlet #outlet="outlet"></router-outlet>
+</a>
 
