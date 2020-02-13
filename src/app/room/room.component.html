@@ -1,0 +1,30 @@
+
+<div class="col-12 d-flex justify-content-end align-items-end pb-0">
+    <mat-form-field class="col-10 col-sm-4 pb-0" appearance="outline" (click)="searchNav.toggle()" style="font-size: small">
+      <mat-label class="pb-0">  Search For A Song!</mat-label>
+      <input class="pb-0" matInput class="text-primary">
+      <mat-icon class="pb-0" matPrefix style="font-size: large; color: whitesmoke"> <i class="fa fa-search"  aria-hidden="true"> </i> </mat-icon>
+    </mat-form-field>
+</div>
+
+
+
+<mat-sidenav-container  [style.height.%]="88" >
+    <mat-sidenav-content>
+    <div class="text-center d-flex flex-column justify-content-center col-12" [style.height.%]="100"  style="background-color: blue;">
+
+    </div>
+
+  </mat-sidenav-content>
+
+
+  <mat-sidenav #searchNav [autoFocus]="false" position="end" mode="over" class="col-10 col-sm-4">
+    ss
+  </mat-sidenav>
+
+</mat-sidenav-container>
+<!--<div class="text-center d-flex flex-column justify-content-center col-12" [style.height.%]="90"  style="background-color: blue;">-->
+
+
+
+<!--</div>-->

@@ -13,7 +13,10 @@ export class HomeComponent {
 
   options: FormGroup;
   colorControl = new FormControl('primary');
-  roomCode: string;
+
+  model = {
+    code: ''
+  };
 
   constructor(form: FormBuilder, private router: Router) {
     this.options = form.group({
@@ -22,6 +25,6 @@ export class HomeComponent {
   }
 
   routeToRoom() {
-    this.router.navigate(['/room/{}', { id: this.roomCode }]);
+    this.router.navigate(['room', this.model.code ]);
   }
 }

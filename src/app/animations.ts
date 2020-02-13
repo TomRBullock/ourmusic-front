@@ -29,3 +29,15 @@ export const slideInAnimation =
       ])
     ]),
   ]);
+
+export const searchBoxOpenClose =
+  trigger('anim', [
+    transition(':enter', [
+      style({width: 0}),
+      animate(250, style({width: '*'})),
+    ]),
+    transition(':leave', [
+      style({width: '*'}),
+      animate(250, style({width: 0})),
+    ]),
+  ]);
