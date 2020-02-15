@@ -19,6 +19,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 @NgModule({
   imports: [
@@ -40,7 +42,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressBarModule
   ],
   exports: [
     MatButtonModule,
@@ -59,10 +62,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressBarModule
   ],
   providers: [
     MatDatepickerModule,
+    MatProgressBarModule
   ]
 })
 

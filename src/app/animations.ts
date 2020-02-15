@@ -17,9 +17,9 @@ export const slideInAnimation =
         { optional: true }),
       group([
         query(':enter',[
-          style({ transform: 'translateY(250%)', opacity: 0 }),
-            animate('1s ease-in-out',
-              style({ transform: 'translateY(0%)', opacity: 1 }))
+          style({ transform: 'translateY(200%)', opacity: 0 }),
+            animate('2.5s ease-in-out',
+              style({ transform: 'translateY(-225%)', opacity: 1 }))
         ], { optional: true }),
         query(':leave', [
           style({ transform:   'translateY(-0%)', opacity: 1 }),
@@ -27,17 +27,5 @@ export const slideInAnimation =
             style({ transform: 'translateY(-200%)', opacity: 0 }))
         ], { optional: true }),
       ])
-    ]),
-  ]);
-
-export const searchBoxOpenClose =
-  trigger('anim', [
-    transition(':enter', [
-      style({width: 0}),
-      animate(250, style({width: '*'})),
-    ]),
-    transition(':leave', [
-      style({width: '*'}),
-      animate(250, style({width: 0})),
     ]),
   ]);
