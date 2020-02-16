@@ -1,6 +1,6 @@
 <div class="text-center d-flex flex-column justify-content-center" [style.height.%]="90">
 
-  <form [formGroup]="form" (ngSubmit)="loginEvent(form.value)" [style.height.%]="50">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" [style.height.%]="50">
 
     <div class="col-12">
       <mat-form-field appearance="outline" color="accent" class="text-center col-lg-6 col-12" [hideRequiredMarker]="true">
@@ -12,23 +12,23 @@
     <div class="col-12 mt-2">
       <mat-form-field appearance="outline" color="accent" class="text-center col-lg-6 col-12" [hideRequiredMarker]="true">
         <mat-label style="font-size: large">PASSWORD</mat-label>
-        <input matInput type="password" style="font-size: xx-large;" class="text-primary" formControlName="password">
+        <input matInput [type]="'password'" style="font-size: xx-large;" class="text-primary" formControlName="password">
       </mat-form-field>
     </div>
 
+    <div class="col-12 mt-2 d-flex justify-content-center align-items-center">
+      <mat-checkbox disabled formControlName="spotifyAuth"></mat-checkbox>
+      <button mat-flat-button type="button" color="accent" class="text-left col-lg-2 col-4 ml-3" [disabled]="spotifyConnected" (click)="connectSpotify()">
+        CONNECT SPOTIFY ACCOUNT
+      </button>
+    </div>
+
     <div class="col-12 mt-2">
-      <button mat-raised-button type="submit" color="primary" class="text-center col-lg-3 col-5" [disabled]="form.invalid">
-        LOGIN
+      <button mat-raised-button type="submit" color="primary" class="text-center col-lg-3 col-5" [disabled]="(form.invalid)">
+        REGISTER
       </button>
     </div>
 
   </form>
-
-  <div class="d-inline-flex justify-content-center align-items-center" [style.height.%]="10">
-    <p class="mr-2" style="color: #c1bfbd">Don't have an account?</p>
-    <button mat-raised-button	color="primary" class="text-center col-sm-2 col-5" (click)="registerEvent()">
-      REGISTER
-    </button>
-  </div>
 
 </div>

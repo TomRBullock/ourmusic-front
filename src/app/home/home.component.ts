@@ -12,20 +12,18 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class HomeComponent {
 
-  options: FormGroup;
-  model = {
-    code: ''
-  };
+  form: FormGroup;
 
   constructor(form: FormBuilder, private router: Router, public _snackBar: MatSnackBar) {
-    this.options = form.group({
-      color: new FormControl('primary')
+    this.form = form.group({
+      code: new FormControl('', Validators.required)
     });
   }
 
-  routeToRoom() {
+  routeToRoom(data) {
+    console.log(data)
     if (this.checkValidityOfRoomCode()) {
-      this.router.navigate(['room', this.model.code ]);
+      this.router.navigate(['room', data.code ]);
     } else {
       this._snackBar.open("Invalid Room Code", '',{
         duration: 10000

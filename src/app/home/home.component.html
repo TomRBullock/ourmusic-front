@@ -1,15 +1,14 @@
 <div class="text-center d-flex flex-column justify-content-center" [style.height.%]="90">
 
-  <form (ngSubmit)="routeToRoom()" #roomCodeForm="ngForm">
+  <form (ngSubmit)="routeToRoom(form.value)" [formGroup]="form">
     <div class="col-12">
-      <mat-form-field appearance="outline" color="accent" class="text-center col-lg-6 col-12" >
+      <mat-form-field appearance="outline" color="accent" class="text-center col-lg-6 col-12" [hideRequiredMarker]="true" >
         <mat-label style="font-size: large">ROOM CODE</mat-label>
-        <input matInput style="font-size: xx-large;" class="text-primary text-uppercase"
-               required [(ngModel)]="model.code" name="code">
+        <input matInput style="font-size: xx-large;" class="text-primary text-uppercase" formControlName="code">
       </mat-form-field>
     </div>
     <div class="col-12 mt-2">
-      <button mat-raised-button color="primary" class="text-center col-lg-3 col-5" [disabled]="!roomCodeForm.form.valid">
+      <button mat-raised-button type="submit" color="primary" class="text-center col-lg-3 col-5" [disabled]="form.invalid">
         CONNECT
       </button>
     </div>

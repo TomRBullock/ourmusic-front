@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 @Component({
@@ -10,22 +10,20 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
-  model = {
-    username: '',
-    password: ''
-  };
 
-  constructor(form: FormBuilder, private router: Router) {
-    this.form = form.group({
-      color: new FormControl('primary')
+  constructor(formBuilder: FormBuilder, private router: Router) {
+    this.form = formBuilder.group({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
     });
   }
 
   ngOnInit() {}
 
-  loginEvent(form: Form) {
-    console.log(form);
+  loginEvent(userCredentials) {
+    console.log(userCredentials);
     //todo: login request
+    this.router.navigate(['']);
   }
 
   registerEvent() {

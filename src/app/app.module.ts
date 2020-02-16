@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RoomComponent } from './room/room.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { RoomComponent } from './room/room.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RoomComponent
+    RoomComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

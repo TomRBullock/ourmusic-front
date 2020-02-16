@@ -21,6 +21,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
@@ -46,7 +47,8 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatPaginatorModule,
     MatCardModule,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
   ],
   exports: [
     MatButtonModule,
@@ -67,7 +69,8 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatPaginatorModule,
     MatCardModule,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
   ],
   providers: [
     MatDatepickerModule,
