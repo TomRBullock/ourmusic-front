@@ -1,17 +1,36 @@
 <div class="text-center d-flex flex-column justify-content-center" [style.height.%]="90">
 
-  <form>
+  <form (ngSubmit)="loginEvent(loginForm)" #loginForm="ngForm" [style.height.%]="50">
+
     <div class="col-12">
-      <mat-form-field appearance="outline" color="accent" class="text-center col-lg-6 col-12">
-        <mat-label style="font-size: large">ROOM CODE</mat-label>
-        <input matInput style="font-size: xx-large;" class="text-primary text-uppercase">
+      <mat-form-field appearance="outline" color="accent" class="text-center col-lg-6 col-12" >
+        <mat-label style="font-size: large">USERNAME</mat-label>
+        <input matInput style="font-size: xx-large;" class="text-primary"
+               required [(ngModel)]="model.username" name="code">
       </mat-form-field>
     </div>
-    <div class="col-12">
-      <button mat-raised-button routerLink=""  routerLinkActive="true" color="primary" class="text-center col-lg-3 col-5">
-        CONNECT
+
+    <div class="col-12 mt-2">
+      <mat-form-field appearance="outline" color="accent" class="text-center col-lg-6 col-12" >
+        <mat-label style="font-size: large">PASSWORD</mat-label>
+        <input matInput [type]="'password'" style="font-size: xx-large;" class="text-primary"
+               required [(ngModel)]="model.password" name="code">
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 mt-2">
+      <button mat-raised-button color="primary" class="text-center col-lg-3 col-5" [disabled]="!loginForm.form.valid">
+        LOGIN
       </button>
     </div>
+
   </form>
+
+  <div class="d-inline-flex justify-content-center align-items-center" [style.height.%]="10">
+    <p class="mr-2" style="color: #c1bfbd">Don't have an account?</p>
+    <button mat-raised-button	color="primary" class="text-center col-sm-2 col-5" (click)="registerEvent()">
+      REGISTER
+    </button>
+  </div>
 
 </div>

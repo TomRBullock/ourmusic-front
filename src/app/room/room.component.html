@@ -1,5 +1,5 @@
 
-<div class="col-12 d-flex justify-content-end align-items-end">
+<div [@fadeInOut]="load_completed" class="col-12 d-flex justify-content-end align-items-end">
     <mat-form-field class="col-7 col-sm-4 pb-0" appearance="outline" (click)="searchNav.toggle()" style="font-size: small">
       <mat-label class="pb-0">  Search For A Song!</mat-label>
       <input class="pb-0" matInput class="text-primary">
@@ -9,7 +9,7 @@
 
 
 
-<mat-sidenav-container [style.height.%]="87" role="region">
+<mat-sidenav-container [@fadeInOut]="load_completed" [style.height.%]="87" role="region">
 
   <div class="d-flex flex-wrap justify-content-center" [style.height.%]="100">
     <div class="col-12 col-sm-10" [style.height.%]="30">

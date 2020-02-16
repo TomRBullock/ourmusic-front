@@ -20,6 +20,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -63,11 +66,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSnackBarModule
   ],
   providers: [
     MatDatepickerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ]
 })
 

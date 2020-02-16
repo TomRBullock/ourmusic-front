@@ -1,16 +1,19 @@
-import {Component, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {fadeInAfterLoad} from '../animations';
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
-  styleUrls: ['./room.component.css']
+  styleUrls: ['./room.component.css'],
+  animations: [fadeInAfterLoad]
 })
 export class RoomComponent implements OnInit {
 
-  displayedColumns = ['position', 'trackName', 'artist']
-
-  searchText = '';
   mobile = false;
+  load_completed: boolean = false;
+
+  displayedColumns = ['position', 'trackName', 'artist']
+  searchText = '';
 
   currentTrack = {
     name: 'Mr. Brightside',
@@ -59,6 +62,10 @@ export class RoomComponent implements OnInit {
       this.mobile = true;
     }
   }
+  ngAfterContentChecked() {
+    this.load_completed = true;
+  }
+
 
   getCurrentSong() {}
 

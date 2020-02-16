@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {slideInAnimation} from '../animations';
 import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -12,19 +13,28 @@ import {Router} from '@angular/router';
 export class HomeComponent {
 
   options: FormGroup;
-  colorControl = new FormControl('primary');
-
   model = {
     code: ''
   };
 
-  constructor(form: FormBuilder, private router: Router) {
+  constructor(form: FormBuilder, private router: Router, public _snackBar: MatSnackBar) {
     this.options = form.group({
-      color: this.colorControl
+      color: new FormControl('primary')
     });
   }
 
   routeToRoom() {
-    this.router.navigate(['room', this.model.code ]);
+    if (this.checkValidityOfRoomCode()) {
+      this.router.navigate(['room', this.model.code ]);
+    } else {
+      this._snackBar.open("Invalid Room Code", '',{
+        duration: 10000
+      });
+    }
+  }
+
+  checkValidityOfRoomCode(): boolean {
+    //todo: service request for room code is active
+    return true;
   }
 }
