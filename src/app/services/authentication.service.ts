@@ -1,9 +1,9 @@
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
-import {User} from './model/user';
+import {User} from '../model/user.model';
 import {catchError, retry} from 'rxjs/operators';
 
 @Injectable()
