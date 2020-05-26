@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, data: {/*animation: 'Login'*/}},
   { path: 'room/:id', component: RoomComponent, data: {/*animation: 'Room'*/}},
   { path: 'register', component: RegisterComponent, data: {/*animation: 'Register'*/}},
+  { path: 'spotify/auth/redirect', component: RegisterComponent, data: {} },
   { path: '**', component: HomeComponent, data: {}}
 ];
 
