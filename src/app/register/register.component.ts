@@ -24,20 +24,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  // connectSpotify(): void {
-  //   //todo: spotify authenticator
-  //
-  //   this.spotifyService.promptSpotifyAuth()
-  //     .subscribe(
-  //       (result) => {
-  //         console.log("Result", result)
-  //         window.location.href=result.uri
-  //       }
-  //     )
-  //   // this.spotifyConnected = true;
-  //   // this.form.controls['spotifyAuth'].setValue(true);
-  // }
-
   onSubmit(regData) {
     console.log(regData);
     //todo: register user

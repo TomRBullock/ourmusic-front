@@ -1,6 +1,8 @@
     <div class="col-12 mt-2 d-flex justify-content-center align-items-center">
-      <mat-checkbox disabled formControlName="spotifyAuth"></mat-checkbox>
-      <button mat-flat-button type="button" color="accent" class="text-left col-lg-2 col-4 ml-3" [disabled]="spotifyConnected" (click)="connectSpotify()">
+      <button mat-flat-button type="button" color="accent" class="text-left" [disabled]="spotifyConnected" (click)="connectSpotify()">
         CONNECT SPOTIFY ACCOUNT
       </button>
+      <div *ngIf="spotifyConnected">
+        Connected (get spotify name)
+      </div>
     </div>

@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { RoomComponent } from './room/room.component';
 import { RegisterComponent } from './register/register.component';
 import { SpotifyConnectComponent } from './spotify/spotify-connect.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 import { AuthenticationService } from './services/authentication.service';
 
@@ -25,7 +26,8 @@ import { AuthenticationService } from './services/authentication.service';
     LoginComponent,
     RoomComponent,
     RegisterComponent,
-    SpotifyConnectComponent
+    SpotifyConnectComponent,
+    UserPageComponent
   ],
   imports: [
     BrowserModule,
