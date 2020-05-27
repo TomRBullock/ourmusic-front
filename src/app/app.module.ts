@@ -14,6 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { RoomComponent } from './room/room.component';
 import { RegisterComponent } from './register/register.component';
 
+import { AuthenticationService } from './services/authentication.service';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,7 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

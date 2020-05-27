@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
+import {Observable} from 'rxjs';
+import {User} from '../model/user.model';
+import {UserLoginService} from '../services/user-login.service';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +15,10 @@ import {AuthenticationService} from '../services/authentication.service';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
+  @Output() userLogin = new EventEmitter();
 
-  constructor(formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService,
+              private userLoginService: UserLoginService) {
     this.form = formBuilder.group({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -25,8 +30,15 @@ export class LoginComponent implements OnInit {
   loginEvent(userCredentials) {
     console.log(userCredentials);
     //todo: login request
-    this.authenticationService.obtainAccessToken(userCredentials);
-    this.router.navigate(['']);
+    this.authenticationService.obtainAccessToken(userCredentials)
+      .subscribe(
+        data => {
+          console.log(data)
+          this.authenticationService.saveToken(data)
+          this.userLoginService.getUser()
+          this.router.navigate(['']);
+        },
+        err => alert('Invalid Credentials'));;
   }
 
   registerEvent() {

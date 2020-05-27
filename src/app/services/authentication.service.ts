@@ -14,7 +14,7 @@ export class AuthenticationService {
   constructor(
     private _router: Router, private _http: HttpClient){}
 
-  obtainAccessToken(loginData){
+  obtainAccessToken(loginData): Observable<any>{
     let params = new HttpParams()
       .append('username', loginData.username)
       .append('password', loginData.password)
@@ -28,14 +28,10 @@ export class AuthenticationService {
       .append('Accept', 'application/x-www-form-urlencoded; charset=utf-8')
       .append('Authorization', 'Basic ' + btoa("SampleClientId:my-secret"));
 
-    console.log(params, headers);
-
-    this._http.post(this.baseUrl +'/oauth/token',
+    return this._http.post(this.baseUrl +'/oauth/token',
       params.toString(), {headers: headers})
       // .map(res => res.json())
-      .subscribe(
-        data => this.saveToken(data),
-        err => alert('Invalid Credentials'));
+
   }
 
   saveToken(token){
@@ -46,19 +42,11 @@ export class AuthenticationService {
   }
 
   getResource(resourceUrl): Observable<User> {
-    // var headers =
-      new Headers({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-        'Authorization': 'Bearer '+ localStorage.getItem('access_token')});
+    let headers = new HttpHeaders()
+      .append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8')
+      .append('Authorization', 'Bearer '+ localStorage.getItem('access_token'));
 
-    let headers = new HttpHeaders();
-    headers.append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
-    headers.append('Authorization', 'Bearer '+ localStorage.getItem('access_token'));
-
-    return this._http.get<User>(this.baseUrl + resourceUrl, {headers: headers})
-      .pipe(
-        retry(3),
-        catchError(AuthenticationService.handleError)
-      )
+    return this._http.get<User>(this.baseUrl + resourceUrl, {headers: headers});
   }
 
   checkLoginState(): boolean{
@@ -74,7 +62,7 @@ export class AuthenticationService {
     this._router.navigate(['/login']);
   }
 
-  private static handleError(error: HttpErrorResponse) {
+  public static handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
