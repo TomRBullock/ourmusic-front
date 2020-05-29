@@ -17,8 +17,7 @@ export class RegisterComponent implements OnInit {
   constructor(formBuilder: FormBuilder, private router: Router, private spotifyService: SpotifyService) {
     this.form = formBuilder.group({
       username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      spotifyAuth: [false, Validators.requiredTrue]
+      password: new FormControl('', Validators.required)
     });
   }
 
@@ -29,6 +28,4 @@ export class RegisterComponent implements OnInit {
     //todo: register user
     this.router.navigate(['']);
   }
-
-
 }

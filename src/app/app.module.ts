@@ -17,6 +17,7 @@ import { SpotifyConnectComponent } from './spotify/spotify-connect.component';
 import { UserPageComponent } from './user-page/user-page.component';
 
 import { AuthenticationService } from './services/authentication.service';
+import { SpotifyService } from './services/spotify.service';
 
 
 @NgModule({
@@ -38,7 +39,10 @@ import { AuthenticationService } from './services/authentication.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    SpotifyService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

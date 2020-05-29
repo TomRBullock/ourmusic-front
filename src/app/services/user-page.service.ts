@@ -13,7 +13,7 @@ export class UserPageService {
   constructor(private _http: HttpClient){}
 
   loadUserRooms(): Observable<any> {
-    return this._http.get(this.baseUrl + '/api/spotify/auth', {})
+    return this._http.get(this.baseUrl + '', {})
   }
 
 }

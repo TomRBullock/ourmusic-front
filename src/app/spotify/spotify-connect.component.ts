@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SpotifyService} from '../services/spotify.service';
 
 @Component({
@@ -11,10 +11,34 @@ import {SpotifyService} from '../services/spotify.service';
 export class SpotifyConnectComponent implements OnInit {
 
   spotifyConnected = false
+  userDetails = null
 
-  constructor(private router: Router, private spotifyService: SpotifyService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private spotifyService: SpotifyService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.spotifyService.checkSpotifyConneced()
+      .subscribe(
+        data => {
+          if (data) {
+            this.spotifyConnected=true
+            this.spotifyService.getUserDetails()
+              .subscribe(
+                data => {
+                  this.spotifyConnected = true
+                  this.userDetails = data
+                },
+                error => {
+                  this.spotifyConnected = false
+                }
+              )
+          } else {
+            this.getAccessFromRedirect()
+          }
+        }
+      )
+
+  }
 
   connectSpotify(): void {
     //todo: spotify authenticator
@@ -22,12 +46,30 @@ export class SpotifyConnectComponent implements OnInit {
     this.spotifyService.promptSpotifyAuth()
       .subscribe(
         (result) => {
-          console.log("Result", result)
           window.location.href = result.uri
         }
       )
-    // this.spotifyConnected = true;
-    // this.form.controls['spotifyAuth'].setValue(true);
   }
+
+  getAccessFromRedirect(): void {
+    this.route
+      .queryParams.subscribe(params => {
+
+        let code = params['code'];
+        if ((code != undefined || code != null) && this.spotifyConnected == false) {
+          this.spotifyService.accesscodeFromCode(code)
+            .subscribe(
+              data => {
+                this.spotifyConnected = true
+                this.userDetails = data
+              },
+              error => {
+                this.spotifyConnected = false
+              }
+            )
+        }
+    })
+  }
+
 
 }
