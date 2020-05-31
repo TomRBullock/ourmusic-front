@@ -1,0 +1,11 @@
+<div mat-dialog-title>Create New Room</div>
+<div [formGroup]="form" class="p-5">
+  <mat-form-field required class="w-100">
+    <mat-label>Room name</mat-label>
+    <input cdkFocusInitial  formControlName="name" matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-flat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-flat-button color="accent" (click)="createRoom(data.name)" [disabled]="(form.invalid)">Ok</button>
+</div>

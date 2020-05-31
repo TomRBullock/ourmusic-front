@@ -41,8 +41,6 @@ export class SpotifyConnectComponent implements OnInit {
   }
 
   connectSpotify(): void {
-    //todo: spotify authenticator
-
     this.spotifyService.promptSpotifyAuth()
       .subscribe(
         (result) => {

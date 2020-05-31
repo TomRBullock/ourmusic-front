@@ -18,6 +18,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 
 import { AuthenticationService } from './services/authentication.service';
 import { SpotifyService } from './services/spotify.service';
+import { RoomCreateDialogComponent } from './user-page/room-create-dialog/room-create-dialog.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SpotifyService } from './services/spotify.service';
     RoomComponent,
     RegisterComponent,
     SpotifyConnectComponent,
-    UserPageComponent
+    UserPageComponent,
+    RoomCreateDialogComponent
   ],
   imports: [
     BrowserModule,
