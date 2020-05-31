@@ -28,12 +28,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   loginEvent(userCredentials) {
-    console.log(userCredentials);
-    //todo: login request
     this.authenticationService.obtainAccessToken(userCredentials)
       .subscribe(
         data => {
-          console.log(data)
           this.authenticationService.saveToken(data)
           this.userLoginService.getUser()
           this.router.navigate(['']);

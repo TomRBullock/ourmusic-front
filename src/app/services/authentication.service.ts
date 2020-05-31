@@ -1,6 +1,6 @@
 import { environment } from '../../environments/environment';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpSentEvent} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import {User} from '../model/user.model';
@@ -30,8 +30,6 @@ export class AuthenticationService {
 
     return this._http.post(this.baseUrl +'/oauth/token',
       params.toString(), {headers: headers})
-      // .map(res => res.json())
-
   }
 
   saveToken(token){
@@ -42,16 +40,19 @@ export class AuthenticationService {
   }
 
   getResource(resourceUrl): Observable<User> {
-    let headers = new HttpHeaders()
+    let headers = this.buildAuthedHeader()
       .append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8')
-      .append('Authorization', 'Bearer '+ localStorage.getItem('access_token'));
 
     return this._http.get<User>(this.baseUrl + resourceUrl, {headers: headers});
   }
 
+  buildAuthedHeader(): HttpHeaders {
+    return new HttpHeaders()
+      .append('Authorization', 'Bearer '+ localStorage.getItem('access_token'));
+  }
+
   checkLoginState(): boolean{
     if (localStorage.getItem('access_token') === null){
-      // this._router.navigate(['/login']);
       return false;
     }
     return true;

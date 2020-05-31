@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import {slideInAnimation} from './animations';
 import {AuthenticationService} from './services/authentication.service';
 import {User} from './model/user.model';
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   title = 'OurMusic';
   username: String = null;
 
-  constructor(private authenticationService: AuthenticationService, private userLoginService: UserLoginService) {}
+  constructor(private router: Router, private authenticationService: AuthenticationService, private userLoginService: UserLoginService) {}
 
   ngOnInit(): void {
     this.userLoginService.subject.subscribe({
@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
     this.authenticationService.logout();
     if (!this.authenticationService.checkLoginState()) {
       this.username = null
+      this.router.navigate(['']);
     }
   }
 

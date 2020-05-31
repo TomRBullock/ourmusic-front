@@ -22,7 +22,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCardModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -70,7 +72,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCardModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule,
+    MatMenuModule,
   ],
   providers: [
     MatDatepickerModule,
