@@ -11,7 +11,7 @@ import { UserLoginService } from './services/user-login.service';
 const routes: Routes = [
   { path: '', component: HomeComponent, data: {/*animation: 'Home'*/} },
   { path: 'login', component: LoginComponent, data: {/*animation: 'Login'*/}},
-  { path: 'room/:id', component: RoomComponent, data: {/*animation: 'Room'*/}},
+  { path: 'room/:code', component: RoomComponent, data: {/*animation: 'Room'*/}},
   { path: 'register', component: RegisterComponent, data: {/*animation: 'Register'*/}},
   { path: 'user', component: UserPageComponent, data: {}, canActivate: [UserLoginService]},
   { path: 'spotify/auth/redirect', component: UserPageComponent, data: {code: String} },

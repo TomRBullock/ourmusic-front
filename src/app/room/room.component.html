@@ -1,8 +1,8 @@
 
 <div [@fadeInOut]="load_completed" class="col-12 d-flex justify-content-end align-items-end">
-    <mat-form-field class="col-7 col-sm-4 pb-0" appearance="outline" (click)="searchNav.toggle()" style="font-size: small">
+    <mat-form-field class="col-7 col-sm-4 pb-0" appearance="outline" (click)="searchNav.open()" style="font-size: small">
       <mat-label class="pb-0">  Search For A Song!</mat-label>
-      <input class="pb-0" matInput class="text-primary">
+      <input class="pb-0" matInput [ngModel]='textModel' (ngModelChange)='changeSearchText($event)' class="text-primary">
       <mat-icon class="pb-0" matPrefix style="font-size: large; color: whitesmoke"> <i class="fa fa-search"  aria-hidden="true"> </i> </mat-icon>
     </mat-form-field>
 </div>
@@ -13,7 +13,7 @@
 
   <div class="d-flex flex-wrap justify-content-center" [style.height.%]="100">
     <div class="col-12 col-sm-10" [style.height.%]="30">
-      <mat-grid-list [style.height.%]="100" cols="6" rowHeight="fit">
+      <mat-grid-list [style.height.%]="100" cols="6" rowHeight="fit" *ngIf="currentTrack != null">
         <mat-grid-tile rowspan="2" colspan="4">
           <div class="col-12 d-flex flex-wrap justify-content-center align-items-center" [style.height.%]="100">
             <img class="col-6 col-lg-3" [src]="currentTrack.image.url" [style.height.%]="100">
@@ -75,10 +75,37 @@
     </div>
   </div>
 
-  <mat-sidenav role="region" #searchNav [autoFocus]="false" position="end" mode="over" class="col-10 col-sm-4">
-    ss
-  </mat-sidenav>
+  <mat-sidenav role="region" #searchNav [autoFocus]="false" position="end" mode="over" class="col-10 col-sm-8 col-md-6">
+<!--    <mat-button-toggle-group appearance="legacy" #type="matButtonToggleGroup" (change)="changeSearchType(type.value)">-->
+<!--      <mat-button-toggle value="TRACK">Track</mat-button-toggle>-->
+<!--      <mat-button-toggle value="ALBUM">Album</mat-button-toggle>-->
+<!--      <mat-button-toggle value="ARTIST">Artist</mat-button-toggle>-->
+<!--      <mat-button-toggle value="PLAYLIST">Playlist</mat-button-toggle>-->
+<!--    </mat-button-toggle-group>-->
 
+    <table mat-table [dataSource]="searchResults" class="mt-5" [style.width.%]="100">
+      <ng-container matColumnDef="results">
+        <td mat-cell *matCellDef="let result">
+          <mat-grid-list cols="6" rowHeight="1:1">
+            <mat-grid-tile rowspan="3" colspan="3" class="align-items-baseline">
+              <img *ngIf="mobile" class="align-bottom" [src]="result.album.images[2].url">
+              <img *ngIf="!mobile" class="align-bottom" [src]="result.album.images[1].url">
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="3">{{ result.name }}</mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="3">{{ result.artists[0].name }}</mat-grid-tile>
+            <mat-grid-tile rowspan="1" colspan="3">
+              <button mat-mini-fab color="accent" aria-label="Add Song" matTooltip="Add Song" (click)="addSongToQueue(result)">
+                <mat-icon class="">add</mat-icon>
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </td>
+      </ng-container>
+
+      <tr mat-row *matRowDef="let row; columns: ['results'];"></tr>
+    </table>
+
+  </mat-sidenav>
 </mat-sidenav-container>
 
 

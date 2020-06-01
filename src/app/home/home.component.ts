@@ -4,7 +4,6 @@ import {slideInAnimation} from '../animations';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HomeService} from '../services/home.service';
-import {Room} from '../model/room.model';
 
 @Component({
   selector: 'app-home',
