@@ -5,13 +5,14 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 
 @Injectable()
-export class HomeService {
+export class RoomService {
 
   baseUrl = environment.baseUrl;
 
   constructor(private _router: Router, private _http: HttpClient){}
 
-  checkRoomExists(roomId: String): Observable<any> {
-    return this._http.get(this.baseUrl + '/api/room/${roomId}/validate')
+  getRoom(roomId: String): Observable<any> {
+    return this._http.get<string>(this.baseUrl + "/api/room");
   }
+
 }

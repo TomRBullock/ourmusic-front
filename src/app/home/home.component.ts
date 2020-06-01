@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {slideInAnimation} from '../animations';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {HomeService} from './home.service';
+import {HomeService} from '../services/home.service';
 import {Room} from '../model/room.model';
 
 @Component({
@@ -27,8 +27,8 @@ export class HomeComponent {
     this.homeService.checkRoomExists(data.code)
       .subscribe(
         (result) => {
-          if (result.valid) {
-            this.router.navigate(['room', result.code ]);
+          if (result) {
+            this.router.navigate(['room', data.code ]);
           } else {
             this._snackBar.open("Invalid Room Code", '',{
               duration: 10000
