@@ -16,10 +16,10 @@
       <mat-grid-list [style.height.%]="100" cols="6" rowHeight="fit" *ngIf="currentTrack != null">
         <mat-grid-tile rowspan="2" colspan="4">
           <div class="col-12 d-flex flex-wrap justify-content-center align-items-center" [style.height.%]="100">
-            <img class="col-6 col-lg-3" [src]="currentTrack.image.url" [style.height.%]="100">
+            <img class="col-6 col-lg-3" [src]="currentTrack.track.images[1].url" [style.height.%]="100">
             <div class="col-4 font-weight-bold" [style.font-size]="1000">
-              <p>{{currentTrack.name}}</p>
-              <p>{{currentTrack.artistName}}</p>
+              <p>{{currentTrack.track.name}}</p>
+              <p>{{currentTrack.track.artistName}}</p>
             </div>
           </div>
         </mat-grid-tile>
@@ -31,7 +31,7 @@
         <mat-grid-tile rowspan="1" colspan="1"></mat-grid-tile>
 
         <mat-grid-tile rowspan="1" colspan="1">
-          <div>{{ this.currentTrack.progressMs | date:'mm:ss'}}</div>
+          <div>{{ currentTrack.track.progressMs | date:'mm:ss'}}</div>
         </mat-grid-tile>
 
         <mat-grid-tile rowspan="1" colspan="2" class="d-flex">
@@ -39,7 +39,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile rowspan="1" colspan="1">
-          <div>{{ currentTrack.durationMs | date:'mm:ss'}}</div>
+          <div>{{ currentTrack.track.durationMs | date:'mm:ss'}}</div>
         </mat-grid-tile>
       </mat-grid-list>
     </div>

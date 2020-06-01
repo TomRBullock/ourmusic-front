@@ -27,16 +27,7 @@ export class RoomComponent implements OnInit {
   textModel: string;
   searchResults;
 
-  currentTrack = {
-    name: 'Mr. Brightside',
-    artistName: 'The Killers',
-    durationMs: 245764,
-    progressMs: 53480,
-    fetchTimeStamp: 0,
-    image: {
-      url: 'https://i.scdn.co/image/8c1e066b5d1045038437d92815d49987f519e44f'
-    }
-  };
+  currentTrack;
 
   room;
   roomQueue;
