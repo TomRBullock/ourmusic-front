@@ -2,7 +2,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {RoomComponent} from '../../room/room.component';
 
-export class RoomCurrentSongWebsocket {
+export class WebSocketBuilder {
   webSocketEndPoint: string = 'http://localhost:8091/ws';
   stompClient: any;
 
