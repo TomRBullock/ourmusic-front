@@ -11,7 +11,9 @@ import {SpotifyService} from '../services/spotify.service';
 export class SpotifyConnectComponent implements OnInit {
 
   spotifyConnected = false
-  userDetails = null
+  userDetails = {
+    displayName: ""
+  }
 
   constructor(private router: Router, private route: ActivatedRoute, private spotifyService: SpotifyService) { }
 

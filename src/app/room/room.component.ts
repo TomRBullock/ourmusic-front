@@ -6,7 +6,6 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {RoomSearchResultDatasource} from './room-search-result.datasource';
 import {ActivatedRoute} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {RoomQueueDatasource} from './room-queue.datasource';
 import {WebSocketBuilder} from '../services/websocket/web-socket-builder';
 
 @Component({
