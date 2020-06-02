@@ -9,6 +9,7 @@ import {RoomSearchResultDatasource} from './room-search-result.datasource';
 import {ActivatedRoute} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {RoomQueueDatasource} from './room-queue.datasource';
+import {RoomCurrentSongWebsocket} from '../services/websocket/room-current-song.websocket';
 
 @Component({
   selector: 'app-room',
@@ -17,6 +18,8 @@ import {RoomQueueDatasource} from './room-queue.datasource';
   animations: [fadeInAfterLoad]
 })
 export class RoomComponent implements OnInit {
+
+  currentRoomWebSocket: RoomCurrentSongWebsocket;
 
   mobile = false;
   load_completed: boolean = false;
@@ -36,20 +39,28 @@ export class RoomComponent implements OnInit {
               public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+    this.currentRoomWebSocket = new RoomCurrentSongWebsocket()
 
     this.route.paramMap
       .subscribe(
         params => {
-          console.log(params.get('code'))
+
           this.roomService.getRoom(params.get('code'))
             .subscribe(
               data => {
                 this.room = data
                 this.currentTrack = data.playingSong
-                console.log(data)
               }
             )
 
+          const _this = this;
+          _this.currentRoomWebSocket._connect().connect({}, function (frame) {
+            _this.currentRoomWebSocket._connect().subscribe("/topic/"+ _this.room.code +"/current-song", function (sdkEvent) {
+              _this.currentTrack = JSON.parse(sdkEvent.body)
+              // JSON.stringify(sdkEvent.body);
+            });
+            // _this.stompClient.reconnect_delay = 2000;
+          }, );
         }
       )
 
@@ -116,10 +127,11 @@ export class RoomComponent implements OnInit {
     this.changeDetectorRefs.detectChanges();
   }
 
-  playNextSong() {}
+  //websocket
+
 
   getPlaybackProgress() {
-    return (this.currentTrack.progressMs / this.currentTrack.durationMs) * 100
+    return (this.currentTrack.progressMs / this.currentTrack.track.durationMs) * 100
   }
 }
 
