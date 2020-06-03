@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
           this.userLoginService.getUser()
           this.router.navigate(['']);
         },
-        err => alert('Invalid Credentials'));;
+        err => alert('Invalid Credentials'));
   }
 
   registerEvent() {
