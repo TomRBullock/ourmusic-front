@@ -31,4 +31,19 @@ export class RoomService {
     return this._http.post(this.baseUrl + `/api/room/${roomCode}/queue`, {track: track} )
   }
 
+  addQueueVote(roomCode: String, queueElement): Observable<any> {
+    return this._http.post(this.baseUrl + `/api/room/${roomCode}/vote/add`, {queueElement: queueElement} )
+  }
+
+  removeQueueVote(roomCode: String, queueElement): Observable<any> {
+    return this._http.post(this.baseUrl + `/api/room/${roomCode}/vote/remove`, {queueElement: queueElement} )
+  }
+
+  skipPlayingTrack(roomCode: String): Observable<any> {
+    return this._http.post(this.baseUrl + `/api/room/${roomCode}/vote/skip`, {} )
+  }
+
+  updateUserEstimate(roomCode: String, joined: boolean): Observable<any> {
+    return this._http.post(this.baseUrl + `/api/room/${roomCode}/join`, {joined: joined} )
+  }
 }

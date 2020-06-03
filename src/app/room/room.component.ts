@@ -4,7 +4,7 @@ import {RoomService} from '../services/room.service';
 import {Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {RoomSearchResultDatasource} from './room-search-result.datasource';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ActivationEnd, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {WebSocketBuilder} from '../services/websocket/web-socket-builder';
 
@@ -18,7 +18,8 @@ export class RoomComponent implements OnInit {
 
   currentRoomWebSocket: WebSocketBuilder;
   queueWebSocket: WebSocketBuilder;
-  queueVoteWebSocket: WebSocketBuilder;
+
+  private routeSub: any;
 
   mobile = false;
   load_completed: boolean = false;
@@ -31,63 +32,75 @@ export class RoomComponent implements OnInit {
 
   currentTrack;
 
+  roomCode: string;
   room;
   roomQueue;
   localVotedTracks = [];
+  localSkipVoted = {
+    uri: "",
+    voted: false
+  }
 
-  constructor(private route: ActivatedRoute, private roomService: RoomService,
-              private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar) {}
-
-  ngOnInit(): void {
-    this.currentRoomWebSocket = new WebSocketBuilder()
-    this.queueWebSocket       = new WebSocketBuilder()
-    this.queueVoteWebSocket   = new WebSocketBuilder()
+  constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService,
+              private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar) {
 
     this.route.paramMap
       .subscribe(
         params => {
+          this.roomCode = params.get('code')
+        })
 
-          this.roomService.getRoom(params.get('code'))
-            .subscribe(
-              data => {
-                this.room = data
-                this.roomQueue = data.queue
-                this.currentTrack = data.playingSong
-              }
-            )
+    this.routeSub = this.router.events.subscribe(
+      event => {
+        if (event instanceof ActivationEnd && this.router.navigated) {
+          this.roomService.updateUserEstimate(this.roomCode, true).subscribe()
+        }
+        if (event instanceof NavigationStart && this.router.navigated) {
+          this.roomService.updateUserEstimate(this.roomCode, false).subscribe()
+        }
+      }
+    )
+  }
 
-          //--- websockets
-          //Current Song
-          const _this = this;
-          _this.currentRoomWebSocket._connect().connect({}, function (frame) {
-            _this.currentRoomWebSocket._connect().subscribe("/topic/"+ _this.room.code +"/current-song", function (sdkEvent) {
-              _this.currentTrack = JSON.parse(sdkEvent.body)
-            });
-            // _this.stompClient.reconnect_delay = 2000;
-          }, _this.currentRoomWebSocket.errorCallBack);
+  ngOnInit(): void {
+    this.currentRoomWebSocket = new WebSocketBuilder()
+    this.queueWebSocket       = new WebSocketBuilder()
 
-          //Queue
-          _this.queueWebSocket._connect().connect({}, function (frame) {
-            _this.queueWebSocket._connect().subscribe("/topic/"+ _this.room.code +"/queue", function (sdkEvent) {
-              _this.roomQueue = JSON.parse(sdkEvent.body)
-              // JSON.stringify(sdkEvent.body);
-            });
-            // _this.stompClient.reconnect_delay = 2000;
-          }, _this.queueWebSocket.errorCallBack);
-
-
-          // //Queue Voting
-          // _this.queueVoteWebSocket._connect().connect({}, function (frame) {
-          //   _this.queueVoteWebSocket._connect().subscribe("/topic/"+ _this.room.code +"/queue/vote", function (sdkEvent) {
-          //     _this.currentTrack = JSON.parse(sdkEvent.body)
-          //     // JSON.stringify(sdkEvent.body);
-          //   });
-          //   // _this.stompClient.reconnect_delay = 2000;
-          // }, _this.queueVoteWebSocket.errorCallBack);
-
-
+    // get room
+    this.roomService.getRoom(this.roomCode)
+      .subscribe(
+        data => {
+          this.room = data
+          this.roomQueue = data.queue
+          this.currentTrack = data.playingSong
         }
       )
+
+    //--- websockets
+    //Current Song
+    const _this = this;
+    _this.currentRoomWebSocket._connect().connect({}, function (frame) {
+      _this.currentRoomWebSocket._connect().subscribe("/topic/"+ _this.roomCode +"/current-song", function (sdkEvent) {
+        let newTrack = JSON.parse(sdkEvent.body)
+        _this.currentTrack = newTrack
+        if (newTrack.track.uri != _this.localSkipVoted.uri) {
+          _this.localSkipVoted = {
+            uri: newTrack.track.uri,
+            voted: false
+          }
+        }
+      });
+      // _this.stompClient.reconnect_delay = 2000;
+    }, _this.currentRoomWebSocket.errorCallBack);
+
+    //Queue
+    _this.queueWebSocket._connect().connect({}, function (frame) {
+      _this.queueWebSocket._connect().subscribe("/topic/"+ _this.roomCode +"/queue", function (sdkEvent) {
+        _this.roomQueue = JSON.parse(sdkEvent.body)
+      });
+      // _this.stompClient.reconnect_delay = 2000;
+    }, _this.queueWebSocket.errorCallBack);
+
 
     if (window.screen.width <= 700) { // 768px portrait
       this.mobile = true;
@@ -100,14 +113,14 @@ export class RoomComponent implements OnInit {
       )
       .subscribe(
         data => {
-          console.log(data)
           this.search(data);
         }
       )
 
   }
-  ngAfterContentChecked() {
-    this.load_completed = true;
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
 
 
@@ -144,7 +157,41 @@ export class RoomComponent implements OnInit {
   }
 
 
+  //voting
+  addVote(track) {
 
+    let trackObj = {
+      uri: track.song.uri,
+      timeAdded: track.timeAdded
+    }
+
+    this.localVotedTracks.push(trackObj)
+
+    this.roomService.addQueueVote(this.room.code, track).subscribe()
+
+  }
+
+  removeVote(track) {
+    let trackObj = {
+      uri: track.song.uri,
+      timeAdded: track.timeAdded
+    }
+
+    let index = this.localVotedTracks.findIndex(storedObj => trackObj === storedObj);
+    this.localVotedTracks.splice(index, 1)
+
+    this.roomService.removeQueueVote(this.room.code, track).subscribe()
+  }
+
+  hasVotedFor(track): boolean {
+    return this.localVotedTracks.filter(storedObj => storedObj.timeAdded == track.timeAdded && storedObj.uri == track.song.uri).length > 0
+  }
+
+  voteSkip() {
+    this.localSkipVoted.voted = true
+    this.roomService.skipPlayingTrack(this.room.code).subscribe()
+
+  }
 
   getPlaybackProgress() {
     return (this.currentTrack.progressMs / this.currentTrack.track.durationMs) * 100
