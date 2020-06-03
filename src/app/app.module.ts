@@ -30,7 +30,7 @@ import { RoomCreateDialogComponent } from './user-page/room-create-dialog/room-c
     RegisterComponent,
     SpotifyConnectComponent,
     UserPageComponent,
-    RoomCreateDialogComponent
+    RoomCreateDialogComponent,
   ],
   imports: [
     BrowserModule,
