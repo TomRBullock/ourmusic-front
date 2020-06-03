@@ -1,0 +1,6 @@
+    <div class="col-12 mt-2 d-flex justify-content-center align-items-center">
+      <button mat-flat-button type="button" color="accent" class="text-left" [disabled]="spotifyConnected" (click)="connectSpotify()">
+        <span *ngIf="!spotifyConnected">CONNECT SPOTIFY ACCOUNT</span>
+        <span *ngIf="spotifyConnected">CONNECTED : {{userDetails.displayName}}</span>
+      </button>
+    </div>
