@@ -1,13 +1,14 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {RoomComponent} from '../../room/room.component';
+import {environment} from '../../../environments/environment';
 
 export class WebSocketBuilder {
-  webSocketEndPoint: string = 'http://localhost:8091/ws';
+  webSocketEndPoint: string = environment.baseUrl + '/ws';
   stompClient: any;
 
   constructor(){
-    console.log("Initialize WebSocket Connection");
+    console.log("Initialize WebSocket Connection: " + this.webSocketEndPoint);
     let ws = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null

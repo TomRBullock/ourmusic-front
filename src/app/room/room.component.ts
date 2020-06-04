@@ -63,8 +63,6 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentRoomWebSocket = new WebSocketBuilder()
-    this.queueWebSocket       = new WebSocketBuilder()
 
     // get room
     this.roomService.getRoom(this.roomCode)
@@ -77,9 +75,11 @@ export class RoomComponent implements OnInit {
       )
 
     //--- websockets
-    //Current Song
+    this.currentRoomWebSocket = new WebSocketBuilder()
+
     const _this = this;
     _this.currentRoomWebSocket._connect().connect({}, function (frame) {
+      //Current Song
       _this.currentRoomWebSocket._connect().subscribe("/topic/"+ _this.roomCode +"/current-song", function (sdkEvent) {
         let newTrack = JSON.parse(sdkEvent.body)
         _this.currentTrack = newTrack
@@ -90,16 +90,13 @@ export class RoomComponent implements OnInit {
           }
         }
       });
-      // _this.stompClient.reconnect_delay = 2000;
-    }, _this.currentRoomWebSocket.errorCallBack);
-
-    //Queue
-    _this.queueWebSocket._connect().connect({}, function (frame) {
-      _this.queueWebSocket._connect().subscribe("/topic/"+ _this.roomCode +"/queue", function (sdkEvent) {
+      //Queue
+      _this.currentRoomWebSocket._connect().subscribe("/topic/"+ _this.roomCode +"/queue", function (sdkEvent) {
+        console.log("update queue")
         _this.roomQueue = JSON.parse(sdkEvent.body)
       });
       // _this.stompClient.reconnect_delay = 2000;
-    }, _this.queueWebSocket.errorCallBack);
+    }, _this.currentRoomWebSocket.errorCallBack);
 
 
     if (window.screen.width <= 700) { // 768px portrait
@@ -121,6 +118,7 @@ export class RoomComponent implements OnInit {
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
+    this.currentRoomWebSocket._disconnect()
   }
 
 

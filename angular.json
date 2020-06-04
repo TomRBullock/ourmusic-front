@@ -65,7 +65,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ourmusic-front:build"
+            "browserTarget": "ourmusic-front:build",
+            "disableHostCheck": true
           },
           "configurations": {
             "production": {
